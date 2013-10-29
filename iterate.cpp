@@ -29,17 +29,25 @@ void position_iterate(struct sys_state *state, struct params pars)
 }
 
 // verlet algorithm: velocity
-void velocity_iterate(struct sys_state *state, double *current_acc[2], struct params pars)
+// returns total kinetic energy (divided by kT)
+double velocity_iterate(struct sys_state *state, double *current_acc[2], struct params pars)
 {
 	double current_a, new_a;
+	double vsquared;
 	
 	for (int i = 0 ; i < 2 ; i++) {
 		for (int n = 0 ; n < pars.N ; n++) {
 
 			state->vel[i][n] = state->vel[i][n] + 
 				pars.incr*(current_acc[i][n] + state->acc[i][n])/2;
+
+			cout << "hihi " << n << endl;
+
+			vsquared += pow(state->vel[i][n], 2);
 		}
 	}
+
+	return vsquared / (pars.kTm * 2);
 }
 
 // compute new accelerations

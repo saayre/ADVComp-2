@@ -33,9 +33,10 @@ struct sys_state {
 struct sys_state *initialize(struct params pars);
 void position_iterate(struct sys_state *state, struct params pars);
 void compute_accel(struct sys_state *state, struct params pars);
-void velocity_iterate(struct sys_state *state, double *current_acc[2], struct params pars);
+double velocity_iterate(struct sys_state *state, double current_acc[2], struct params pars);
 
 struct params set_pars(int n_particles);
+void array_copy(double *state_acc, double *current_acc, int N);
 
 double mb_dist(double v, double kT_m);
 
